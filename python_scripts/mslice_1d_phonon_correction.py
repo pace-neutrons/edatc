@@ -7,7 +7,7 @@ import numpy as np
 import mslice.cli as mc
 import mslice.plotting.pyplot as plt
 
-ws_er2ir2o7_Ei180_5K = mc.Load(Filename='er2ir2o7_Ei180_5K.nxspe', OutputWorkspace='er2ir2o7_Ei180_5K')
+ws_er2ir2o7_Ei180_5K = mc.Load(Filename='/home/dl11170/edatc/powder_data/er2ir2o7_Ei180_5K.nxspe', OutputWorkspace='er2ir2o7_Ei180_5K')
 
 cut_ws_0 = mc.Cut(ws_er2ir2o7_Ei180_5K, CutAxis="|Q|,2.0,16.0,0.08152", IntegrationAxis="DeltaE,20.0,55.0,0.0", NormToOne=False)
 lo_q_cut = mc.Cut(ws_er2ir2o7_Ei180_5K, IntegrationAxis="|Q|,2.0,5.0,0.0", CutAxis="DeltaE,-20,100,1", NormToOne=False)
@@ -32,20 +32,9 @@ ax.errorbar(lo_q_cut, label="er2ir2o7_Ei180_5K Low Q", color="blue", marker="o",
 ax.errorbar(hi_q_cut, label="er2ir2o7_Ei180_5K High Q", color="green", marker="o", ls="-", lw=1.5, intensity_range=(0.0, 500.0))
 ax.errorbar(mag_cut, label="er2ir2o7_Ei180_5K Magnetic", color="red", marker="o", ls="-", lw=1.5, intensity_range=(0.0, 500.0))
 
-from mslice.cli.helperfunctions import hide_a_line_and_errorbars, append_visible_handle_and_label
-from mslice.util.compat import legend_set_draggable
-
-# hide lines, errorbars, and legends
-handles, labels = ax.get_legend_handles_labels()
-visible_handles = []
-visible_labels = []
-
-append_visible_handle_and_label(visible_handles, handles, visible_labels, labels, 0)
-
-legend_set_draggable(ax.legend(visible_handles, visible_labels, fontsize='medium'), True)
-
 ax.set_title('')
 ax.set_ylabel(r'Signal/#Events')
+ax.set_xlabel(r'Energy Transfer (meV)')
 ax.set_ylim(bottom=-50.0, top=150.0)
 ax.set_xlim(left=-20, right=100)
 mc.Show()
